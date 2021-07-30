@@ -11,6 +11,7 @@ install:
 migrate:
 	# Run database migrations
 	python manage.py migrate
+	
 lint:
 	# See local hadolint install instructions:   https://github.com/hadolint/hadolint
 	# This is linter for Dockerfiles
