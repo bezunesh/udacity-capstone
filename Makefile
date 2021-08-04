@@ -18,4 +18,4 @@ lint:
 	# hadolint Dockerfile
 	# This is a linter for Python source code linter: https://www.pylint.org/
 	# This should be run from inside a virtualenv
-	pylint --disable=R,C,W1203 hello/
+	pylint --disable=R,C,W1203,W0611,W013 hello/
