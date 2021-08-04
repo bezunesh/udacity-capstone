@@ -44,13 +44,21 @@ jobs:
       - checkout
       - docker/check
       - docker/build:
-          image: docker.io/bezu/helloapp
+          image: helloapp
+          registry: docker.io
+          tag: ${CIRCLE_SHA1}
+      - run:
+          command: |
+            docker image ls
       - docker/push:
           digest-path: /tmp/digest.txt
-          image: docker.io/bezu/helloapp:${CIRCLE_SHA1}
+          image: helloapp
+          registry: docker.io
+          tag: ${CIRCLE_SHA1}
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
+      
   
   create-infrastructure:
     executor: aws-eks/python3
