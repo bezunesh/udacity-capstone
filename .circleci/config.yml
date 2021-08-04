@@ -58,8 +58,7 @@ jobs:
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
-      
-  
+       
   create-infrastructure:
     executor: aws-eks/python3
     steps:
