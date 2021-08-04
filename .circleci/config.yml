@@ -47,7 +47,7 @@ jobs:
           image: docker.io/bezu/helloapp
       - docker/push:
           digest-path: /tmp/digest.txt
-          image: docker.io/bezu/helloapp
+          image: bezu/helloapp
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
