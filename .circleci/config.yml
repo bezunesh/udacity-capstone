@@ -47,7 +47,7 @@ jobs:
           image: docker.io/bezu/helloapp
       - docker/push:
           digest-path: /tmp/digest.txt
-          image: bezu/helloapp
+          image: docker.io/bezu/helloapp:${CIRCLE_SHA1}
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
