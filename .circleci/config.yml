@@ -44,7 +44,7 @@ jobs:
       - checkout
       - docker/check
       - docker/build:
-          image: helloapp
+          image: bezu/helloapp
           registry: docker.io
           tag: ${CIRCLE_SHA1}
       - run:
@@ -52,7 +52,7 @@ jobs:
             docker image ls
       - docker/push:
           digest-path: /tmp/digest.txt
-          image: helloapp
+          image: bezu/helloapp
           registry: docker.io
           tag: ${CIRCLE_SHA1}
       - run:
