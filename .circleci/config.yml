@@ -58,5 +58,5 @@ jobs:
 workflows:
   default:
     jobs:
-      - build
+      #- build
       - deploy-infrastructure
