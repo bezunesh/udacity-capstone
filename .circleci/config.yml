@@ -1,4 +1,7 @@
 version: 2.1
+orbs:
+  aws-eks: circleci/aws-eks@0.2.3
+
 jobs:
   build:
     docker:
@@ -30,33 +33,12 @@ jobs:
           command: |
             . venv/bin/activate
             make lint 
-  deploy-infrastructure:
-    docker:
-      - image: python:3
-    steps:
-      - checkout
-      - run:
-          name: Install dependencies
-          command: |
-            # install eksctl
-            curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | \
-              tar xz -C .
-            mv eksctl /usr/local/bin
-            eksctl version
-      - run:
-          name: Create cluster 
-          command: |
-            eksctl create cluster \
-              --name my-cluster-2 \
-              --region us-east-1 \
-              --zones us-east-1a,us-east-1b \
-              --with-oidc \
-              --ssh-access \
-              --ssh-public-key  ${SSH_KEY_NAME}\ 
-              --managed   
+
+  
 
 workflows:
-  default:
+  deployment:
     jobs:
-      #- build
-      - deploy-infrastructure
+      - aws-eks/create-cluster:
+          cluster-name: my-eks-demo
+          show-eksctl-command: true
