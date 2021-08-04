@@ -1,7 +1,9 @@
 version: 2.1
 orbs:
+  docker: circleci/docker@1.6.0
   aws-eks: circleci/aws-eks@0.2.3
   kubernetes: circleci/kubernetes@0.4.0
+
 
 jobs:
   build:
@@ -35,13 +37,28 @@ jobs:
             . venv/bin/activate
             make lint 
   
+  create-and-push-image:
+    executor: docker/docker
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/check
+      - docker/build:
+          image: docker.io/bezu/helloapp
+      - docker/push:
+          digest-path: /tmp/digest.txt
+          image: docker.io/bezu/helloapp
+      - run:
+          command: |
+            echo "Digest is: $(</tmp/digest.txt)"
+  
   create-infrastructure:
     executor: aws-eks/python3
     steps:
       - aws-eks/create-cluster:
           cluster-name: cluster-${CIRCLE_WORKFLOW_ID}
           show-eksctl-command: true
-          
+
   create-deployment:
     executor: aws-eks/python3
     parameters:
@@ -64,5 +81,8 @@ workflows:
   deployment:
     jobs:
       #- create-infrastructure:
+      - create-and-push-image
       - create-deployment:
           cluster-name: my-eks-demo
+          requires:
+            - create-and-push-image
