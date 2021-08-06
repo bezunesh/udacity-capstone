@@ -108,7 +108,7 @@ workflows:
              - create-and-push-image
       - aws-eks/update-container-image:
           cluster-name: cluster-cc1f8c6c-ce83-4876-8393-4b7c3a8ed882 #cluster-${CIRCLE_WORKFLOW_ID}
-          container-image-updates: 'helloapp=helloapp:${CIRCLE_SHA1}'
+          container-image-updates: 'halloapp=helloapp:${CIRCLE_SHA1}'
           record: true
           show-kubectl-command: true
           resource-name: deployment/helloapp
