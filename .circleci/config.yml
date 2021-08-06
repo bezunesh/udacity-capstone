@@ -93,5 +93,6 @@ workflows:
       #- create-and-push-image
       - create-deployment:
           cluster-name: cluster-${CIRCLE_WORKFLOW_ID}
-          #requires:
+          requires:
+            - create-infrastructure
           #  - create-and-push-image
