@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   docker: circleci/docker@1.6.0
   aws-eks: circleci/aws-eks@0.2.3
-  kubernetes: circleci/kubernetes@0.4.0
+  kubernetes: circleci/kubernetes@0.12.0
 
 
 jobs:
@@ -86,8 +86,10 @@ jobs:
           resource-name: deployment/helloapp
 
   update-container-image:
-    executor: aws-eks/python3
+    docker:
+      - image: 'cimg/base:stable'
     steps:
+      - kubernetes/install-kubectl
       - kubernetes/update-container-image:
           container-image-updates: 'helloapp=helloapp:${CIRCLE_SHA1}'
           record: true
