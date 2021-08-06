@@ -46,7 +46,7 @@ jobs:
       - docker/build:
           image: bezu/helloapp
           registry: docker.io
-          tag: ${CIRCLE_SHA1}
+          tag: latest
       - run:
           command: |
             docker image ls
@@ -54,7 +54,7 @@ jobs:
           digest-path: /tmp/digest.txt
           image: bezu/helloapp
           registry: docker.io
-          tag: ${CIRCLE_SHA1}
+          tag: latest
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
@@ -85,22 +85,11 @@ jobs:
           resource-file-path: kubernetes/deployment.yaml
           resource-name: deployment/helloapp
 
-  update-container-image:
-    docker:
-      - image: 'cimg/base:stable'
-    steps:
-      - kubernetes/install-kubectl
-      - kubernetes/update-container-image:
-          container-image-updates: 'helloapp=helloapp:latest'
-          record: true
-          resource-name: deployment/helloapp
-          show-kubectl-command: true
-
 workflows:
   deployment:
     jobs:
       - create-and-push-image
-      - create-infrastructure
+      #- create-infrastructure
       - create-deployment:
           cluster-name: cluster-${CIRCLE_WORKFLOW_ID}
           requires:
