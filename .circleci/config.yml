@@ -111,5 +111,6 @@ workflows:
           container-image-updates: 'helloapp=helloapp:${CIRCLE_SHA1}'
           record: true
           show-kubectl-command: true
+          resource-name: deployment/helloapp
           requires:
             - create-deployment
