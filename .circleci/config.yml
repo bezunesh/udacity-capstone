@@ -100,11 +100,11 @@ workflows:
   deployment:
     jobs:
       - create-and-push-image
-      #- create-infrastructure
+      - create-infrastructure
       - create-deployment:
           cluster-name: cluster-${CIRCLE_WORKFLOW_ID}
           requires:
-            #- create-infrastructure
+             - create-infrastructure
              - create-and-push-image
       - aws-eks/update-container-image:
           cluster-name: cluster-${CIRCLE_WORKFLOW_ID}
