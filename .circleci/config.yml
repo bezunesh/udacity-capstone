@@ -92,9 +92,9 @@ workflows:
       #- create-infrastructure
       - create-deployment:
           cluster-name: cluster-4826bd0a-7aa6-4874-b748-6823ad56064f
-          requires:
+          #requires:
              #- create-infrastructure
-             - create-and-push-image
+             # - create-and-push-image
       - aws-eks/update-container-image:
           cluster-name: cluster-4826bd0a-7aa6-4874-b748-6823ad56064f
           container-image-updates: 'helloapp=helloapp:latest'
