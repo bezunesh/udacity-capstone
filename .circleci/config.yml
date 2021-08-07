@@ -46,7 +46,7 @@ jobs:
       - docker/build:
           image: bezu/helloapp
           registry: docker.io
-          tag: latest
+          tag: ${CIRCLE_SHA1}
       - run:
           command: |
             docker image ls
@@ -54,7 +54,7 @@ jobs:
           digest-path: /tmp/digest.txt
           image: bezu/helloapp
           registry: docker.io
-          tag: latest
+          tag: ${CIRCLE_SHA1}
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
@@ -97,7 +97,7 @@ workflows:
              #- create-infrastructure
       - aws-eks/update-container-image:
           cluster-name: cluster-b8dad007-74e3-4d06-ad6e-fe1f448460f0 #cluster-${CIRCLE_WORKFLOW_ID}
-          container-image-updates: 'helloapp=helloapp:latest'
+          container-image-updates: 'helloapp=helloapp:${CIRCLE_SHA1}'
           record: true
           show-kubectl-command: true
           resource-name: deployment/helloapp
