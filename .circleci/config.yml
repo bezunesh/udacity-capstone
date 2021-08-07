@@ -95,7 +95,7 @@ workflows:
       #- create-infrastructure
       - create-deployment:
           cluster-name: cluster-b8dad007-74e3-4d06-ad6e-fe1f448460f0 #cluster-${CIRCLE_WORKFLOW_ID}
-          requires:
+          #requires:
              #- create-and-push-image
              #- create-infrastructure
       - aws-eks/update-container-image:
