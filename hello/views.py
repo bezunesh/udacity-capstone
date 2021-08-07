@@ -2,4 +2,4 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("Hello, world! This is a django application deployed on AWS.")
+    return HttpResponse("Hello, world! This is a django application on AWS.")
