@@ -6,7 +6,7 @@ metadata:
     app: helloapp
 spec:
   replicas: 2
-  stategy: 
+  strategy: 
     type: RollingUpdate
       rollingUpdate:
         maxSurge: 1
