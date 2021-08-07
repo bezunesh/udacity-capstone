@@ -6,6 +6,11 @@ metadata:
     app: helloapp
 spec:
   replicas: 2
+  stategy: 
+    type: RollingUpdate
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 1
   selector:
     matchLabels:
       app: helloapp
@@ -20,6 +25,10 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8000
 
 ---
 
