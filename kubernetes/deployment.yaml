@@ -6,14 +6,6 @@ metadata:
     app: helloapp
 spec:
   replicas: 2
-  strategy: 
-    type: RollingUpdate
-      rollingUpdate:
-        maxSurge: 1
-        maxUnavailable: 1
-  selector:
-    matchLabels:
-      app: helloapp
   template:
     metadata:
       labels:
@@ -29,6 +21,14 @@ spec:
           httpGet:
             path: /
             port: 8000
+  strategy: 
+    type: RollingUpdate
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: helloapp
 
 ---
 
