@@ -91,12 +91,12 @@ workflows:
       #- create-and-push-image
       #- create-infrastructure
       - create-deployment:
-          cluster-name: cluster-${CIRCLE_WORKFLOW_ID}
+          cluster-name: cluster-78de2143-1fcc-4192-b1fb-6c3e6c978a27 #cluster-${CIRCLE_WORKFLOW_ID}
           #requires:
              #- create-and-push-image
              #- create-infrastructure
       - aws-eks/update-container-image:
-          cluster-name: cluster-${CIRCLE_WORKFLOW_ID}
+          cluster-name: cluster-78de2143-1fcc-4192-b1fb-6c3e6c978a27 #cluster-${CIRCLE_WORKFLOW_ID}
           container-image-updates: 'helloapp=helloapp:${CIRCLE_SHA1}'
           record: true
           show-kubectl-command: true
