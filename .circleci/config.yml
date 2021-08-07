@@ -84,6 +84,17 @@ jobs:
           get-rollout-status: true
           resource-file-path: kubernetes/deployment.yaml
           resource-name: deployment/helloapp
+  update:
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - checkout
+      - kubernetes/install-kubectl
+      - kubernetes/update-container-image:
+          container-image-updates: 'helloapp=helloapp:${CIRCLE_SHA1}'
+          get-rollout-status: true
+          record: true
+          resource-name: deployment/helloapp
       - run:
           command : |
             kubectl rollout restart deployment
@@ -91,18 +102,13 @@ jobs:
 workflows:
   deployment:
     jobs:
-      #- create-and-push-image
+      - create-and-push-image
       #- create-infrastructure
       - create-deployment:
           cluster-name: cluster-b8dad007-74e3-4d06-ad6e-fe1f448460f0 #cluster-${CIRCLE_WORKFLOW_ID}
-          #requires:
-             #- create-and-push-image
+          requires:
+             - create-and-push-image
              #- create-infrastructure
-      - aws-eks/update-container-image:
-          cluster-name: cluster-b8dad007-74e3-4d06-ad6e-fe1f448460f0 #cluster-${CIRCLE_WORKFLOW_ID}
-          container-image-updates: 'helloapp=helloapp:${CIRCLE_SHA1}'
-          record: true
-          show-kubectl-command: true
-          resource-name: deployment/helloapp
+      - update:
           requires:
             - create-deployment
