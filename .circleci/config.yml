@@ -58,7 +58,7 @@ jobs:
       - run:
           command: |
             docker tag bezu/helloapp:${CIRCLE_WORKFLOW_ID} bezu/helloapp:latest
-            docker bezu/helloapp:latest
+            docker push bezu/helloapp:latest
       - run:
           command: |
             echo "Digest is: $(</tmp/digest.txt)"
