@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: helloapp
-        image: docker.io/bezu/helloapp:latest
+        image: docker.io/bezu/helloapp
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
