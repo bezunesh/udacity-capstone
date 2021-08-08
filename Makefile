@@ -12,4 +12,4 @@ migrate:
 	
 lint:
 	hadolint Dockerfile
-	pylint --disable=R,C,W1203,W0611,W013 hello/
+	pylint --disable=R,C,W0613 hello/
