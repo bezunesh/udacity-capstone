@@ -88,9 +88,6 @@ jobs:
           get-rollout-status: true
           resource-file-path: kubernetes/deployment.yaml
           resource-name: deployment/helloapp
-      - run:
-          command : |
-            kubectl rollout restart deployment
 
 workflows:
   deployment:

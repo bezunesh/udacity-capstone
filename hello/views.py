@@ -2,4 +2,4 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("Hello, world! This is a django app deployed on Kubernetes.")
+    return HttpResponse("Hello, world! This is a django app deployed on AWS Kubernetes.")
