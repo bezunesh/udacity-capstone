@@ -104,14 +104,14 @@ workflows:
   deployment:
     jobs:
       - create-and-push-image
-      - create-infrastructure
+      #- create-infrastructure
       - create-deployment:
-          cluster-name: cluster-${CIRCLE_WORKFLOW_ID}
+          cluster-name: cluster-70284cc9-bafc-45cb-8655-8e1cc19e86c5 #cluster-${CIRCLE_WORKFLOW_ID}
           requires:
              - create-and-push-image
-             - create-infrastructure
+             #- create-infrastructure
       - aws-eks/update-container-image:
-          cluster-name: cluster-${CIRCLE_WORKFLOW_ID}
+          cluster-name: cluster-70284cc9-bafc-45cb-8655-8e1cc19e86c5 #cluster-${CIRCLE_WORKFLOW_ID}
           container-image-updates: 'helloapp=helloapp:${CIRCLE_WORKFLOW_ID}'
           #post-steps:
             #- kubernetes/delete-resource:
@@ -122,6 +122,7 @@ workflows:
           requires:
             - create-deployment
           resource-name: deployment/helloapp
+          show-kubectl-command: true
       #- update:
          # requires:
             #- create-deployment
