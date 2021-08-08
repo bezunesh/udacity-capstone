@@ -4,8 +4,9 @@ WORKDIR /app
 
 COPY . /app/
 
-RUN pip install --upgrade pip && \
-	pip install -r requirements.txt
+# hadolint ignore=DL3013
+RUN pip install --no-cache-dir --upgrade pip &&\
+    pip install --no-cache-dir --trusted-host pypi.python.org -r requirements.txt
 
 EXPOSE 8000
 
