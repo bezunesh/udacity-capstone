@@ -4,7 +4,6 @@ orbs:
   aws-eks: circleci/aws-eks@0.2.3
   kubernetes: circleci/kubernetes@0.12.0
 
-
 jobs:
   build:
     docker:
@@ -95,9 +94,13 @@ jobs:
 workflows:
   deployment:
     jobs:
-      - create-and-push-image
-      #- create-infrastructure
+      - build 
+      - create-and-push-image:
+          requires:
+            - build
+      - create-infrastructure
       - create-deployment:
-          cluster-name: cluster-70284cc9-bafc-45cb-8655-8e1cc19e86c5 #cluster-${CIRCLE_WORKFLOW_ID}
+          cluster-name: cluster-${CIRCLE_WORKFLOW_ID}
           requires:
              - create-and-push-image
+             - create-infrastructure
