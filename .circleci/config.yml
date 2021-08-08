@@ -84,21 +84,14 @@ jobs:
           get-rollout-status: true
           resource-file-path: kubernetes/deployment.yaml
           resource-name: deployment/helloapp
-      - run:
-          command : |
-            kubectl rollout restart deployment
 
-  update:
-    docker:
-      - image: 'cimg/base:stable'
+  restart:
+    executor: aws-eks/python3
     steps:
       - checkout
-      - kubernetes/install-kubectl
-      - kubernetes/update-container-image:
-          container-image-updates: 'helloapp=helloapp:${CIRCLE_WORKFLOW_ID}'
-          get-rollout-status: true
-          record: true
-          resource-name: deployment/helloapp
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: cluster-70284cc9-bafc-45cb-8655-8e1cc19e86c5
+          install-kubectl: true
       - run:
           command : |
             kubectl rollout restart deployment
@@ -126,6 +119,6 @@ workflows:
             - create-deployment
           resource-name: deployment/helloapp
           show-kubectl-command: true
-      #- update:
-         # requires:
-            #- create-deployment
+      - restart:
+          requires:
+            - aws-eks/update-container-image
